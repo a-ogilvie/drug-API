@@ -9,7 +9,7 @@ const forcePromiseReject = function() {
 };
 
 describe("drug", () => {
-  describe("#get", () => {
+  describe("GET", () => {
     before(() => {
       newDrug = {
         name: "aspirin",
@@ -23,15 +23,25 @@ describe("drug", () => {
 
     after(() => knex("drug").del());
 
-    it("returns a list of all drugs available", () => {
-      database.drug.get().then((drugs) => {
-        expect(drugs).to.be.an("array");
-        expect(drugs[0].id).to.be.a("number");
+    context("when GET all drugs", () => {
+      it("returns a list of all drugs available", () => {
+        database.drug.list().then((drugs) => {
+          expect(drugs).to.be.an("array");
+          expect(drugs[0].id).to.be.a("number");
+        });
+      });
+    });
+
+    context("when GET one drug", () => {
+      it("returns a single drug when given correct URI", () => {
+        database.drug.get({ name: "aspirin" }).then((drug) => {
+          expect(drug.name).to.equal("aspirin");
+        });
       });
     });
   });
 
-  describe("#post", () => {
+  describe("POST", () => {
     let newDrug;
     context("when bad params are given", () => {
       it("politely refuses", () => {

@@ -4,7 +4,16 @@ const router = express.Router();
 
 module.exports = function(database) {
   router.get("/", (req, res) => {
-    database.drug.get().then((drugs) => res.status(200).json(drugs));
+    database.drug.list().then((drugs) => res.status(200).json(drugs));
+  });
+
+  router.get("/:name", (req, res) => {
+    database.drug
+      .get(req.params)
+      .then((drug) => res.status(200).json(drug))
+      .catch((err) => {
+        return res.status(400).send(err.message);
+      });
   });
 
   router.post("/", (req, res) => {

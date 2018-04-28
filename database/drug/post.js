@@ -3,7 +3,7 @@ const Promise = require("bluebird");
 module.exports = function(knex, Drug) {
   return (params) => {
     const dbEntry = {
-      name: params.name.toLowerCase(),
+      name: params.name,
       description: params.description,
       price: params.price,
       stock: params.stock
@@ -16,7 +16,10 @@ module.exports = function(knex, Drug) {
         }
       }
     })
-      .then(() => knex("drug").insert(dbEntry))
+      .then(() => {
+        dbEntry.name = dbEntry.name.toLowerCase();
+        return knex("drug").insert(dbEntry);
+      })
       .then(() => {
         return knex("drug")
           .where({ name: dbEntry.name })

@@ -1,5 +1,12 @@
 class Drug {
-  constructor(dbDrug) {}
+  constructor(dbDrug) {
+    this.id = dbDrug.id;
+    this.name = dbDrug.name;
+    this.type = dbDrug.drug_type;
+    this.description = dbDrug.description;
+    this.price = dbDrug.price;
+    this.stock = dbDrug.stock;
+  }
 }
 
 module.exports = function(knex) {

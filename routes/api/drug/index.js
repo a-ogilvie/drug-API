@@ -4,19 +4,17 @@ const router = express.Router();
 
 module.exports = function(database) {
   router.get("/", (req, res) => {
-    database.drug
-      .get({ name: req.query.name })
-      .then((drug) => res.status(200).json(drug));
+    database.drug.get().then((drugs) => res.status(200).json(drugs));
   });
 
   router.post("/", (req, res) => {
     database.drug
-      .create({
-        name: req.query.name,
-        type: req.query.type,
-        description: req.query.description,
-        price: req.query.price,
-        stock: req.query.stock
+      .post({
+        name: req.body.name,
+        type: req.body.type,
+        description: req.body.description,
+        price: req.body.price,
+        stock: req.body.stock
       })
       .then((drug) => res.status(201).json(drug))
       .catch((err) => {

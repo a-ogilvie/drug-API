@@ -6,8 +6,7 @@ const apiRouter = require("./routes/api")(database);
 
 const express = require("express");
 const app = express();
-const PORT = process.env.PORT || 3000;
 
-app.listen(PORT);
+app.listen(config.express.port);
 
-console.log(`Drug API server started on port: ${PORT}`);
+console.log(`Drug API server started on port: ${config.express.port}`);

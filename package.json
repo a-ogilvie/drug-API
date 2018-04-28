@@ -8,14 +8,16 @@
   "license": "UNLICENSED",
   "private": true,
   "scripts": {
-    "test": "mocha test/test.js && yarn lint",
+    "test": "mocha test/test.js --exit",
     "start": "nodemon index.js",
     "migrate": "knex migrate:latest --knexfile database/knexfile.js",
-    "touch-migrate": "knex migrate:make NEW_MIGRATION --knexfile database/knexfile.js",
+    "touch-migrate":
+      "knex migrate:make NEW_MIGRATION --knexfile database/knexfile.js",
     "rollback": "knex migrate:rollback --knexfile database/knexfile.js"
   },
   "dependencies": {
     "bluebird": "^3.5.1",
+    "body-parser": "^1.18.2",
     "express": "^4.16.3",
     "knex": "^0.14.6",
     "pg": "^7.4.1"

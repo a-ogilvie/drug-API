@@ -11,7 +11,6 @@ module.exports = function(database) {
     database.drug
       .post({
         name: req.body.name,
-        type: req.body.type,
         description: req.body.description,
         price: req.body.price,
         stock: req.body.stock

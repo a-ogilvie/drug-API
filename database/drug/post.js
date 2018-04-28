@@ -3,8 +3,7 @@ const Promise = require("bluebird");
 module.exports = function(knex, Drug) {
   return (params) => {
     const dbEntry = {
-      name: params.name,
-      drug_type: params.type,
+      name: params.name.toLowerCase(),
       description: params.description,
       price: params.price,
       stock: params.stock

@@ -13,7 +13,6 @@ describe("drug", () => {
     before(() => {
       newDrug = {
         name: "aspirin",
-        type: "small molecule",
         description: "another painkiller",
         price: "0.75",
         stock: 3
@@ -49,7 +48,6 @@ describe("drug", () => {
       before(() => {
         newDrug = {
           name: "paracetamol",
-          type: "small molecule",
           description: "common painkiller",
           price: "0.75",
           stock: 3

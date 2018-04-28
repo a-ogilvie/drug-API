@@ -8,11 +8,9 @@ exports.up = function(knex, Promise) {
       .notNullable()
       .index();
 
-    table.text("drug_type").notNullable();
-
     table.text("description").notNullable();
 
-    table.decimal("price", 3, 2).notNullable();
+    table.decimal("price", 19, 4).notNullable();
 
     table.integer("stock").notNullable();
   });

@@ -3,7 +3,7 @@ class Drug {
     this.id = dbDrug.id;
     this.name = dbDrug.name;
     this.description = dbDrug.description;
-    this.price = dbDrug.price;
+    this.price = Number(dbDrug.price).toFixed(2);
     this.stock = dbDrug.stock;
   }
 }

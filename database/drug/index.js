@@ -10,7 +10,8 @@ class Drug {
 
 module.exports = function(knex) {
   return {
-    get: require("./get")(knex, Drug),
-    post: require("./post")(knex, Drug)
+    list: require("./list")(knex, Drug),
+    post: require("./post")(knex, Drug),
+    get: require("./get")(knex, Drug)
   };
 };

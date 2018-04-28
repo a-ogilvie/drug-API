@@ -1,5 +1,5 @@
 {
-  "name": "drug-API",
+  "name": "drug-api",
   "version": "0.1.0",
   "description": "An API used to manage drug stock levels.",
   "main": "index.js",
@@ -10,7 +10,9 @@
   "scripts": {
     "start": "nodemon server.js",
     "migrate": "knex migrate:latest --knexfile database/knexfile.js",
-    "rollback": "knex migrate:rollback --knexfile database/knexfile.js "
+    "touch-migrate":
+      "knex migrate:make NEW_MIGRATION --knexfile database/knexfile.js",
+    "rollback": "knex migrate:rollback --knexfile database/knexfile.js"
   },
   "dependencies": {
     "express": "^4.16.3",

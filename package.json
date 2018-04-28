@@ -8,7 +8,7 @@
   "license": "UNLICENSED",
   "private": true,
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "nodemon index.js",
     "migrate": "knex migrate:latest --knexfile database/knexfile.js",
     "touch-migrate":
       "knex migrate:make NEW_MIGRATION --knexfile database/knexfile.js",

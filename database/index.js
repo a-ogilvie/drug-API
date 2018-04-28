@@ -1,16 +1,18 @@
 const Knex = require("knex");
 
 module.exports = function(config) {
+  const databaseConfig = config.database;
+
   const knex = Knex({
-    client: config.client,
-    port: config.connection.port,
+    client: databaseConfig.client,
+    port: databaseConfig.port,
     connection: {
-      host: config.connection.host,
-      database: config.connection.database
+      host: databaseConfig.connection.host,
+      database: databaseConfig.connection.database
     }
   });
 
   return {
-    //routes go here
+    drug: require("./drug")(knex)
   };
 };

@@ -39,10 +39,14 @@ describe("GET /api", () => {
       .request(app)
       .get("/api/drug")
       .set("Content-Type", "application/json")
-      .end((_, res) => {
+      .then((res) => {
         status = res.status;
         response = res.text;
-        console.log(response);
+        done();
+      })
+      .catch((err) => {
+        status = err.status;
+        response = err.text;
         done();
       });
   });
@@ -63,7 +67,7 @@ describe("GET /api", () => {
   });
 });
 
-describe("GET /api/{}", () => {
+describe("GET /api/{drug name}", () => {
   let status;
   let response;
   const fakeResponse = {
@@ -84,9 +88,14 @@ describe("GET /api/{}", () => {
         .request(app)
         .get("/api/drug/penicillin")
         .set("Content-Type", "application/json")
-        .end((_, res) => {
+        .then((res) => {
           status = res.status;
           response = res.text;
+          done();
+        })
+        .catch((err) => {
+          status = err.status;
+          response = err.text;
           done();
         });
     });
@@ -116,9 +125,14 @@ describe("GET /api/{}", () => {
         .request(app)
         .get("/api/drug/penicillin")
         .set("Content-Type", "application/json")
-        .end((_, res) => {
+        .then((res) => {
           status = res.status;
           response = res.text;
+          done();
+        })
+        .catch((err) => {
+          status = err.status;
+          response = err.text;
           done();
         });
     });
@@ -132,7 +146,7 @@ describe("GET /api/{}", () => {
       done();
     });
 
-    it("should provide a single drug.", (done) => {
+    it("should provide an error message.", (done) => {
       response.should.be.a("string");
       response.should.equal("Drug not found!");
       done();
@@ -161,9 +175,14 @@ describe("POST /api", () => {
         .request(app)
         .post("/api/drug")
         .set("Content-Type", "application/json")
-        .end((_, res) => {
+        .then((res) => {
           status = res.status;
           response = res.text;
+          done();
+        })
+        .catch((err) => {
+          status = err.status;
+          response = err.text;
           done();
         });
     });
@@ -199,9 +218,14 @@ describe("POST /api", () => {
         .request(app)
         .post("/api/drug")
         .set("Content-Type", "application/json")
-        .end((_, res) => {
+        .then((res) => {
           status = res.status;
           response = res.text;
+          done();
+        })
+        .catch((err) => {
+          status = err.status;
+          response = err.text;
           done();
         });
     });
@@ -235,9 +259,14 @@ describe("DELETE /api/{drug name}", () => {
         .request(app)
         .delete("/api/drug/penicillin")
         .set("Content-Type", "application/json")
-        .end((_, res) => {
+        .then((res) => {
           status = res.status;
           response = res.text;
+          done();
+        })
+        .catch((err) => {
+          status = err.status;
+          response = err.text;
           done();
         });
     });
@@ -271,9 +300,14 @@ describe("DELETE /api/{drug name}", () => {
         .request(app)
         .delete("/api/drug/notfound")
         .set("Content-Type", "application/json")
-        .end((_, res) => {
+        .then((res) => {
           status = res.status;
           response = res.text;
+          done();
+        })
+        .catch((err) => {
+          status = err.status;
+          response = err.text;
           done();
         });
     });
@@ -320,9 +354,14 @@ describe("PATCH /api/{drug name}", () => {
         .request(app)
         .patch("/api/drug/penicillin")
         .set("Content-Type", "application/json")
-        .end((_, res) => {
+        .then((res) => {
           status = res.status;
           response = res.text;
+          done();
+        })
+        .catch((err) => {
+          status = err.status;
+          response = err.text;
           done();
         });
     });
@@ -357,9 +396,14 @@ describe("PATCH /api/{drug name}", () => {
         .request(app)
         .patch("/api/drug/notfound")
         .set("Content-Type", "application/json")
-        .end((_, res) => {
+        .then((res) => {
           status = res.status;
           response = res.text;
+          done();
+        })
+        .catch((err) => {
+          status = err.status;
+          response = err.text;
           done();
         });
     });

@@ -17,9 +17,11 @@ app.listen(config.database.port, () => {
   console.log("Server listening for apiCalls tests!");
 });
 
+let status;
+let response;
+let stub;
+
 describe("GET /api", () => {
-  let status;
-  let response;
   const fakeResponse = [
     {
       id: 1,
@@ -29,7 +31,6 @@ describe("GET /api", () => {
       stock: 500
     }
   ];
-  let stub;
 
   before((done) => {
     stub = sinon
@@ -68,8 +69,6 @@ describe("GET /api", () => {
 });
 
 describe("GET /api/{drug name}", () => {
-  let status;
-  let response;
   const fakeResponse = {
     id: 1,
     name: "penicillin",
@@ -77,7 +76,6 @@ describe("GET /api/{drug name}", () => {
     price: "1.30",
     stock: 500
   };
-  let stub;
 
   context("when drug is present", () => {
     before((done) => {
@@ -156,8 +154,6 @@ describe("GET /api/{drug name}", () => {
 
 describe("POST /api", () => {
   context("when drug is not in database", () => {
-    let status;
-    let response;
     const fakeResponse = {
       id: 1,
       name: "penicillin",
@@ -165,7 +161,6 @@ describe("POST /api", () => {
       price: "1.30",
       stock: 500
     };
-    let stub;
 
     before((done) => {
       stub = sinon
@@ -204,10 +199,6 @@ describe("POST /api", () => {
   });
 
   context("when drug already exists in database", () => {
-    let status;
-    let response;
-    let stub;
-
     before((done) => {
       stub = sinon
         .stub(database.drug, "post")
@@ -249,10 +240,6 @@ describe("POST /api", () => {
 
 describe("DELETE /api/{drug name}", () => {
   context("when drug exists in database", () => {
-    let status;
-    let response;
-    let stub;
-
     before((done) => {
       stub = sinon.stub(database.drug, "delete").returns(Promise.resolve());
       chai
@@ -288,10 +275,6 @@ describe("DELETE /api/{drug name}", () => {
   });
 
   context("when drug doesn't exist", () => {
-    let status;
-    let response;
-    let stub;
-
     before((done) => {
       stub = sinon
         .stub(database.drug, "delete")
@@ -331,8 +314,6 @@ describe("DELETE /api/{drug name}", () => {
 
 describe("PATCH /api/{drug name}", () => {
   context("when drug exists in database", () => {
-    let status;
-    let response;
     const fakeResponse = {
       id: 1,
       name: "penicillin",
@@ -384,10 +365,6 @@ describe("PATCH /api/{drug name}", () => {
   });
 
   context("when drug doesn't exist", () => {
-    let status;
-    let response;
-    let stub;
-
     before((done) => {
       stub = sinon
         .stub(database.drug, "get")

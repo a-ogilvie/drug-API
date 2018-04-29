@@ -294,3 +294,89 @@ describe("DELETE /api/{drug name}", () => {
     });
   });
 });
+
+describe("PATCH /api/{drug name}", () => {
+  context("when drug exists in database", () => {
+    let status;
+    let response;
+    const fakeResponse = {
+      id: 1,
+      name: "penicillin",
+      description: "A famous antibiotic made from mouldy bread.",
+      price: "1.30",
+      stock: 500
+    };
+    let stubGet;
+    let stubPatch;
+
+    before((done) => {
+      stubGet = sinon
+        .stub(database.drug, "get")
+        .returns(Promise.resolve(fakeResponse));
+      stubPatch = sinon
+        .stub(database.drug, "patch")
+        .returns(Promise.resolve(fakeResponse));
+      chai
+        .request(app)
+        .patch("/api/drug/penicillin")
+        .set("Content-Type", "application/json")
+        .end((_, res) => {
+          status = res.status;
+          response = res.text;
+          done();
+        });
+    });
+
+    after(() => {
+      stubGet.restore();
+      stubPatch.restore();
+    });
+
+    it("should return status 200.", (done) => {
+      status.should.equal(200);
+      done();
+    });
+
+    it("should the amended drug info", (done) => {
+      response.should.be.a("string");
+      JSON.parse(response).should.be.an("object");
+      done();
+    });
+  });
+
+  context("when drug doesn't exist", () => {
+    let status;
+    let response;
+    let stub;
+
+    before((done) => {
+      stub = sinon
+        .stub(database.drug, "get")
+        .returns(Promise.reject(new Error("Drug not found!")));
+      chai
+        .request(app)
+        .patch("/api/drug/notfound")
+        .set("Content-Type", "application/json")
+        .end((_, res) => {
+          status = res.status;
+          response = res.text;
+          done();
+        });
+    });
+
+    after(() => {
+      stub.restore();
+    });
+
+    it("should return status 404.", (done) => {
+      status.should.equal(404);
+      done();
+    });
+
+    it("should return an error string.", (done) => {
+      response.should.be.a("string");
+      response.should.equal("Drug not found!");
+      done();
+    });
+  });
+});

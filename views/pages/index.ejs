@@ -1,0 +1,20 @@
+<%- contentFor('docs') %>
+  <main>
+    <div class="container">
+      <div>
+        Hi there! Check out our cool APIs!
+      </div>
+      <div>
+        <%apiInfo.forEach((entry)=>{%>
+          <h3>
+            <%=entry.name%>
+          </h3>
+          <p>
+            <%=entry.body%>
+          </p>
+          <%})%>
+
+      </div>
+    </div>
+
+  </main>

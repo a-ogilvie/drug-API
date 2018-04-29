@@ -6,6 +6,9 @@ const apiRouter = require("./routes/api")(database);
 
 const bodyParser = require("body-parser");
 
+const ejsLayouts = require("express-ejs-layouts");
+const apiInfo = require("./views/apiInfo.js");
+
 const express = require("express");
 const app = express();
 
@@ -21,7 +24,15 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.json({ type: "application/json", limit: "50mb" }));
 
+app.use("/", express.static("public"));
+
 app.use("/api", apiRouter);
+
+app.set("view engine", "ejs");
+app.use(ejsLayouts);
+app.get("/", (req, res) => {
+  res.render("pages/index", { apiInfo });
+});
 
 app.listen(config.express.port);
 

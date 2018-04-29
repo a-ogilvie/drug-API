@@ -31,7 +31,7 @@ module.exports = function(database) {
       })
       .then((drug) => res.status(200).json(drug))
       .catch((err) => {
-        return res.status(400).send(err.message);
+        return res.status(404).send(err.message);
       });
   });
 

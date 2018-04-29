@@ -11,9 +11,7 @@ module.exports = function(database) {
     database.drug
       .get(req.params)
       .then((drug) => res.status(200).json(drug))
-      .catch((err) => {
-        return res.status(400).send(err.message);
-      });
+      .catch((err) => res.status(400).send(err.message));
   });
 
   router.patch("/:name", (req, res) => {
@@ -30,20 +28,14 @@ module.exports = function(database) {
         return database.drug.patch(newInfo);
       })
       .then((drug) => res.status(200).json(drug))
-      .catch((err) => {
-        return res.status(404).send(err.message);
-      });
+      .catch((err) => res.status(404).send(err.message));
   });
 
   router.delete("/:name", (req, res) => {
     database.drug
       .delete(req.params)
-      .then(() => {
-        return res.status(200).send("Drug deleted.");
-      })
-      .catch((err) => {
-        return res.status(404).send(err.message);
-      });
+      .then(() => res.status(200).send("Drug deleted."))
+      .catch((err) => res.status(404).send(err.message));
   });
 
   router.post("/", (req, res) => {
@@ -55,9 +47,7 @@ module.exports = function(database) {
         stock: req.body.stock
       })
       .then((drug) => res.status(201).json(drug))
-      .catch((err) => {
-        return res.status(409).send(err.message);
-      });
+      .catch((err) => res.status(409).send(err.message));
   });
 
   return router;

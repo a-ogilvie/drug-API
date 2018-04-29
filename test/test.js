@@ -9,7 +9,7 @@ const forcePromiseReject = function() {
 };
 
 describe("drug", () => {
-  describe("GET", () => {
+  describe("db.drug.get", () => {
     before(() => {
       newDrug = {
         name: "aspirin",
@@ -41,7 +41,7 @@ describe("drug", () => {
     });
   });
 
-  describe("POST", () => {
+  describe("db.drug.post", () => {
     let newDrug;
     context("when bad params are given", () => {
       it("politely refuses", () => {
@@ -82,6 +82,76 @@ describe("drug", () => {
               "That drug already exists in the database."
             );
           });
+      });
+    });
+  });
+
+  describe("db.drug.patch", () => {
+    context("when bad params are given", () => {
+      it("politely refuses", () => {
+        database.drug
+          .patch({ name: "" })
+          .then(forcePromiseReject)
+          .catch((err) => {
+            expect(err.message).to.equal("Must provide name!");
+          });
+      });
+    });
+
+    context("when good params are given", () => {
+      before(() => {
+        newDrug = {
+          name: "paracetamol",
+          description: "common painkiller",
+          price: "0.75",
+          stock: 3
+        };
+        return knex("drug").post(newDrug);
+
+        after(() => {
+          return knex("drug").del();
+        });
+
+        it("alters a single entry in the database", () => {
+          return database.drug
+            .get(newDrug)
+            .then((drug) => {
+              const newInfo = {
+                name: "paracetamol",
+                stock: 200
+              };
+              return database.drug.patch(newInfo);
+            })
+            .then((drug) => {
+              expect(drug.stock).to.equal(200);
+            });
+        });
+
+        it("alters multiple entries in the database", () => {
+          return database.drug
+            .get(newDrug)
+            .then((drug) => {
+              const newInfo = {
+                name: "paracetamol",
+                price: "2.30",
+                stock: 65
+              };
+              return database.drug.patch(newInfo);
+            })
+            .then((drug) => {
+              expect(drug.price).to.equal("2.30");
+              expect(drug.stock).to.equal(200);
+            });
+        });
+
+        it("fails when drug is not present", () => {
+          return database.drug
+            .get(newDrug)
+            .then(forcePromiseReject)
+            .catch((err) => {
+              expect(err.message).to.equal("Drug not found!");
+            });
+        });
       });
     });
   });

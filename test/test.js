@@ -155,4 +155,41 @@ describe("drug", () => {
       });
     });
   });
+
+  describe("db.drug.delete", () => {
+    before(() => {
+      newDrug = {
+        name: "paracetamol",
+        description: "common painkiller",
+        price: "0.75",
+        stock: 3
+      };
+      return database.drug.post(newDrug);
+    });
+
+    after(() => {
+      return knex("drug").del();
+    });
+
+    it("deletes a single entry from the database", () => {
+      return database.drug
+        .delete(newDrug)
+        .then((response) => {
+          return database.drug.get(newDrug);
+        })
+        .then(forcePromiseReject)
+        .catch((err) => {
+          expect(err.message).to.equal("Drug not found!");
+        });
+    });
+
+    it("fails when drug is not present", () => {
+      return database.drug
+        .delete(newDrug)
+        .then(forcePromiseReject)
+        .catch((err) => {
+          expect(err.message).to.equal("Drug not found!");
+        });
+    });
+  });
 });

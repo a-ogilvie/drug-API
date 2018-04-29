@@ -106,52 +106,52 @@ describe("drug", () => {
           price: "0.75",
           stock: 3
         };
-        return knex("drug").post(newDrug);
+        return database.drug.post(newDrug);
+      });
 
-        after(() => {
-          return knex("drug").del();
-        });
+      after(() => {
+        return knex("drug").del();
+      });
 
-        it("alters a single entry in the database", () => {
-          return database.drug
-            .get(newDrug)
-            .then((drug) => {
-              const newInfo = {
-                name: "paracetamol",
-                stock: 200
-              };
-              return database.drug.patch(newInfo);
-            })
-            .then((drug) => {
-              expect(drug.stock).to.equal(200);
-            });
-        });
+      it("alters a single entry in the database", () => {
+        return database.drug
+          .get(newDrug)
+          .then((drug) => {
+            const newInfo = {
+              name: "paracetamol",
+              stock: 200
+            };
+            return database.drug.patch(newInfo);
+          })
+          .then((drug) => {
+            expect(drug.stock).to.equal(200);
+          });
+      });
 
-        it("alters multiple entries in the database", () => {
-          return database.drug
-            .get(newDrug)
-            .then((drug) => {
-              const newInfo = {
-                name: "paracetamol",
-                price: "2.30",
-                stock: 65
-              };
-              return database.drug.patch(newInfo);
-            })
-            .then((drug) => {
-              expect(drug.price).to.equal("2.30");
-              expect(drug.stock).to.equal(200);
-            });
-        });
+      it("alters multiple entries in the database", () => {
+        return database.drug
+          .get(newDrug)
+          .then((drug) => {
+            const newInfo = {
+              name: "paracetamol",
+              price: "2.30",
+              stock: 65
+            };
+            return database.drug.patch(newInfo);
+          })
+          .then((drug) => {
+            expect(drug.price).to.equal("2.30");
+            expect(drug.stock).to.equal(200);
+          });
+      });
 
-        it("fails when drug is not present", () => {
-          return database.drug
-            .get(newDrug)
-            .then(forcePromiseReject)
-            .catch((err) => {
-              expect(err.message).to.equal("Drug not found!");
-            });
-        });
+      it("fails when drug is not present", () => {
+        return database.drug
+          .get(newDrug)
+          .then(forcePromiseReject)
+          .catch((err) => {
+            expect(err.message).to.equal("Drug not found!");
+          });
       });
     });
   });

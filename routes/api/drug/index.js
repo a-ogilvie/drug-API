@@ -42,7 +42,7 @@ module.exports = function(database) {
         return res.status(200).send("Drug deleted.");
       })
       .catch((err) => {
-        return res.status(400).send(err.message);
+        return res.status(404).send(err.message);
       });
   });
 
@@ -56,12 +56,6 @@ module.exports = function(database) {
       })
       .then((drug) => res.status(201).json(drug))
       .catch((err) => {
-        if (err.message === "That drug already exists!") {
-          return database.drug
-            .get({ name: req.body.name })
-            .then((drug) => res.status(200).json(drug));
-        }
-
         return res.status(409).send(err.message);
       });
   });

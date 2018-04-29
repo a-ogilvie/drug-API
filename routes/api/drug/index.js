@@ -2,16 +2,22 @@ const express = require("express");
 
 const router = express.Router();
 
+const OK = 200;
+const CREATED = 201;
+const BAD_REQ = 400;
+const NOT_FOUND = 404;
+const CONFLICT = 409;
+
 module.exports = function(database) {
   router.get("/", (req, res) => {
-    database.drug.list().then((drugs) => res.status(200).json(drugs));
+    database.drug.list().then((drugs) => res.status(OK).json(drugs));
   });
 
   router.get("/:name", (req, res) => {
     database.drug
       .get(req.params)
-      .then((drug) => res.status(200).json(drug))
-      .catch((err) => res.status(400).send(err.message));
+      .then((drug) => res.status(OK).json(drug))
+      .catch((err) => res.status(BAD_REQ).send(err.message));
   });
 
   router.patch("/:name", (req, res) => {
@@ -27,15 +33,15 @@ module.exports = function(database) {
         };
         return database.drug.patch(newInfo);
       })
-      .then((drug) => res.status(200).json(drug))
-      .catch((err) => res.status(404).send(err.message));
+      .then((drug) => res.status(OK).json(drug))
+      .catch((err) => res.status(NOT_FOUND).send(err.message));
   });
 
   router.delete("/:name", (req, res) => {
     database.drug
       .delete(req.params)
-      .then(() => res.status(200).send("Drug deleted."))
-      .catch((err) => res.status(404).send(err.message));
+      .then(() => res.status(OK).send("Drug deleted."))
+      .catch((err) => res.status(NOT_FOUND).send(err.message));
   });
 
   router.post("/", (req, res) => {
@@ -46,8 +52,8 @@ module.exports = function(database) {
         price: req.body.price,
         stock: req.body.stock
       })
-      .then((drug) => res.status(201).json(drug))
-      .catch((err) => res.status(409).send(err.message));
+      .then((drug) => res.status(CREATED).json(drug))
+      .catch((err) => res.status(CONFLICT).send(err.message));
   });
 
   return router;

@@ -42,23 +42,39 @@ Visit [localhost:3000](http://localhost:3000) to see the running API!
 
 ### GET api/drug
 
-Use this to get all available drug info.
+Use this to get all available drug info formatted as JSON.
 
 ### GET api/drug/{drug name}
 
-Use this to get info on one specific drug.
+Use this to get info on one specific drug formatted as JSON
 
 ### POST api/drug/
 
-Use this to add one drug to the database.
+Use this to add one drug to the database. Request should be formatted as JSON.
+
+```json
+{
+  "name": "penicillin",
+  "description": "A famous antibiotic made from mouldy bread.",
+  "price": "1.30",
+  "stock": 500
+}
+```
 
 ### PATCH api/drug/{drug name}
 
-Use this to alter the properties of one drug.
+Use this to alter the properties of one drug. Request shuld be formatted as JSON. All submitted properties are altered, and the new drug is returned as JSON.
+
+```json
+{
+  "price": "2.50",
+  "stock": 20
+}
+```
 
 ### DELETE api/drug/{drug name}
 
-Use this to delete one drug from the database.
+Use this to delete one drug from the database. Be careful, as this process is irreversible.
 
 ## Contributing
 

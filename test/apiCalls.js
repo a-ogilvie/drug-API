@@ -222,3 +222,75 @@ describe("POST /api", () => {
     });
   });
 });
+
+describe("DELETE /api/{drug name}", () => {
+  context("when drug exists in database", () => {
+    let status;
+    let response;
+    let stub;
+
+    before((done) => {
+      stub = sinon.stub(database.drug, "delete").returns(Promise.resolve());
+      chai
+        .request(app)
+        .delete("/api/drug/penicillin")
+        .set("Content-Type", "application/json")
+        .end((_, res) => {
+          status = res.status;
+          response = res.text;
+          done();
+        });
+    });
+
+    after(() => {
+      stub.restore();
+    });
+
+    it("should return status 200.", (done) => {
+      status.should.equal(200);
+      done();
+    });
+
+    it("should return a confirmation message", (done) => {
+      response.should.be.a("string");
+      response.should.equal("Drug deleted.");
+      done();
+    });
+  });
+
+  context("when drug doesn't exist", () => {
+    let status;
+    let response;
+    let stub;
+
+    before((done) => {
+      stub = sinon
+        .stub(database.drug, "delete")
+        .returns(Promise.reject(new Error("Drug not found!")));
+      chai
+        .request(app)
+        .delete("/api/drug/notfound")
+        .set("Content-Type", "application/json")
+        .end((_, res) => {
+          status = res.status;
+          response = res.text;
+          done();
+        });
+    });
+
+    after(() => {
+      stub.restore();
+    });
+
+    it("should return status 404.", (done) => {
+      status.should.equal(404);
+      done();
+    });
+
+    it("should return an error string.", (done) => {
+      response.should.be.a("string");
+      response.should.equal("Drug not found!");
+      done();
+    });
+  });
+});

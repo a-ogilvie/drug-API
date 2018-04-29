@@ -20,14 +20,12 @@ module.exports = function(knex, Drug) {
         dbEntry.name = dbEntry.name.toLowerCase();
         return knex("drug").insert(dbEntry);
       })
-      .then(() => {
-        return knex("drug")
+      .then(() =>
+        knex("drug")
           .where({ name: dbEntry.name })
-          .select();
-      })
-      .then((newEntry) => {
-        return new Drug(newEntry.pop());
-      })
+          .select()
+      )
+      .then((newEntry) => new Drug(newEntry.pop()))
       .catch((err) => {
         if (err.message.match(/(duplicate key value)/)) {
           err.message = "That drug already exists in the database.";

@@ -3,8 +3,6 @@ module.exports = function(knex, Drug) {
     return knex("drug")
       .select("*")
       .orderBy("name")
-      .then((dbDrugs) => {
-        return dbDrugs.map((dbDrug) => new Drug(dbDrug));
-      });
+      .then((dbDrugs) => dbDrugs.map((dbDrug) => new Drug(dbDrug)));
   };
 };

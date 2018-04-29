@@ -27,14 +27,12 @@ module.exports = function(knex, Drug) {
         throw new Error("Must provide name!");
       }
     })
-      .then(() => {
-        return Promise.all(updates);
-      })
-      .then(() => {
-        return knex("drug")
+      .then(() => Promise.all(updates))
+      .then(() =>
+        knex("drug")
           .where({ name: dbEntry.name })
-          .select();
-      })
+          .select()
+      )
       .then((alteredEntry) => new Drug(alteredEntry.pop()));
   };
 };

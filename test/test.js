@@ -141,13 +141,13 @@ describe("drug", () => {
           })
           .then((drug) => {
             expect(drug.price).to.equal("2.30");
-            expect(drug.stock).to.equal(200);
+            expect(drug.stock).to.equal(65);
           });
       });
 
       it("fails when drug is not present", () => {
         return database.drug
-          .get(newDrug)
+          .get({ name: "viagra" })
           .then(forcePromiseReject)
           .catch((err) => {
             expect(err.message).to.equal("Drug not found!");

@@ -13,6 +13,7 @@ module.exports = function(knex) {
     list: require("./list")(knex, Drug),
     post: require("./post")(knex, Drug),
     get: require("./get")(knex, Drug),
-    patch: require("./patch")(knex, Drug)
+    patch: require("./patch")(knex, Drug),
+    delete: require("./delete")(knex, Drug)
   };
 };

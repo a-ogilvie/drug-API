@@ -35,6 +35,17 @@ module.exports = function(database) {
       });
   });
 
+  router.delete("/:name", (req, res) => {
+    database.drug
+      .delete(req.params)
+      .then(() => {
+        return res.status(200).send("Drug deleted.");
+      })
+      .catch((err) => {
+        return res.status(400).send(err.message);
+      });
+  });
+
   router.post("/", (req, res) => {
     database.drug
       .post({

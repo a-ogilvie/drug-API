@@ -62,7 +62,7 @@ module.exports = function(database) {
             .then((drug) => res.status(200).json(drug));
         }
 
-        return res.status(400).send(err.message);
+        return res.status(409).send(err.message);
       });
   });
 

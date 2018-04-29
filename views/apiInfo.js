@@ -8,7 +8,7 @@ module.exports = [
     body: "Use this to get info on one specific drug."
   },
   {
-    name: "POST api/drug/",
+    name: "POST api/drug",
     body: "Use this to add one drug to the database."
   },
   {

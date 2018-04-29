@@ -37,3 +37,5 @@ app.get("/", (req, res) => {
 app.listen(config.express.port);
 
 console.log(`Drug API server started on port: ${config.express.port}`);
+
+module.exports = app;

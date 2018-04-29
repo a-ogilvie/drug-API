@@ -8,7 +8,7 @@
   "license": "UNLICENSED",
   "private": true,
   "scripts": {
-    "test": "mocha test/test.js --exit",
+    "test": "mocha --exit",
     "start": "nodemon index.js",
     "migrate": "knex migrate:latest --knexfile database/knexfile.js",
     "touch-migrate": "knex migrate:make NEW_MIGRATION --knexfile database/knexfile.js",
@@ -25,7 +25,9 @@
   },
   "devDependencies": {
     "chai": "^4.1.2",
+    "chai-http": "^4.0.0",
     "mocha": "^5.1.1",
-    "nodemon": "^1.17.3"
+    "nodemon": "^1.17.3",
+    "sinon": "^4.5.0"
   }
 }
